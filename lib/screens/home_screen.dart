@@ -1,28 +1,28 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:online_shopping_store/FirebaseServices/product_retriever.dart';
 import 'package:online_shopping_store/ViewModels/home_view_model.dart';
 import 'package:online_shopping_store/models/ProductModels/product.dart';
 import 'package:online_shopping_store/models/category.dart';
+import 'package:online_shopping_store/models/test_new_product_model.dart';
 import 'package:online_shopping_store/provider/product_provider.dart';
 import 'package:online_shopping_store/screens/cart_screen.dart';
 import 'package:online_shopping_store/widgets/category_list_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:online_shopping_store/widgets/product_item.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
 import 'package:provider/provider.dart';
 
 import '../dummy_data.dart';
-
 class HomeScreen extends StatelessWidget {
   HomeViewModel homeViewModel;
 
-  List<Product> products;
 
   @override
   Widget build(BuildContext context) {
     homeViewModel=HomeViewModel(context: context);
+     Provider.of<ProductProvider>(context,listen: false).setAllProducts(TestNewProductsModel().intializeProducts());
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -82,13 +82,13 @@ class HomeScreen extends StatelessWidget {
 }
 
 class HomeBody extends StatelessWidget {
-  List<Category> categories = DummyData.fillCategoryDummyData();
-  List<Product> trendingProducts;
-  List<Product> bestSelling = DummyData.fillProductDummyData();
+  Map<CategoryType,IconData> categories = DummyData.fillCategoryDummyData();
+  List<NewProductModel> trendingProducts;
+  List<NewProductModel> bestSelling = TestNewProductsModel().intializeProducts();
 
   @override
   Widget build(BuildContext context) {
-    trendingProducts = Provider.of<ProductProvider>(context).allProducts;
+    trendingProducts = TestNewProductsModel().intializeProducts();
     var screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -96,13 +96,13 @@ class HomeBody extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(top: 8.0),
             height: 120.0,
-            child: ListView.builder(
-              itemBuilder: (context, index) =>
-                  CategoryListItem(categories[index]),
-              itemCount: categories.length,
+            child: ListView(
               scrollDirection: Axis.horizontal,
+              children: [
+                ...categories.keys.map((catType) => CategoryListItem(catType: catType,catIcon: categories[catType],))
+              ],
+            )
             ),
-          ),
           Container(
             width: screenSize.width * 0.9,
             child: CarouselSlider(
@@ -176,7 +176,7 @@ class _TitleTextWidget extends StatelessWidget {
   }
 }
 
-Container _buildHoriznotalProductView(Size screenSize, List<Product> prodcuts) {
+Container _buildHoriznotalProductView(Size screenSize, List<NewProductModel> prodcuts) {
   return Container(
     height: screenSize.height > 700
         ? screenSize.height * 0.41

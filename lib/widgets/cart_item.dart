@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:online_shopping_store/models/ProductModels/product.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
 import 'package:online_shopping_store/models/cart_model.dart';
 import 'package:online_shopping_store/provider/cart_favorite_provider.dart';
 import 'package:online_shopping_store/provider/product_provider.dart';
@@ -37,8 +37,8 @@ class CartItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CachedNetworkImage(
-                        imageUrl: cartModel.product.mainInfo.displayedImageColor
-                            .imgColorUrl,
+                        imageUrl: cartModel.product.imgUrl
+                            ,
                         height: screenSize.height * 0.2,
                         width: screenSize.width * 0.3,
                         fit: BoxFit.contain,
@@ -52,7 +52,7 @@ class CartItem extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   top: 24.0, left: 16.0),
                               child: Text(
-                                cartModel.product.mainInfo.title,
+                                cartModel.product.title,
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -159,7 +159,7 @@ class CartItem extends StatelessWidget {
   }
 
   void setProductCartToFalse(BuildContext context) {
-    Product product=Provider.of<CartFavoriteProvider>(context,listen: false).cartProducts[cartItemIndex].product;
+    NewProductModel product=Provider.of<CartFavoriteProvider>(context,listen: false).cartProducts[cartItemIndex].product;
     int productIndex=Provider.of<ProductProvider>(context,listen: false).allProducts.indexOf(product);
     Provider.of<ProductProvider>(context,listen: false).setProductCartValue(productIndex, false);
 

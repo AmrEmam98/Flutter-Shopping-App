@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shopping_store/provider/cart_favorite_provider.dart';
 import 'package:online_shopping_store/provider/product_provider.dart';
+import 'package:online_shopping_store/screens/home_screen.dart';
 import 'package:online_shopping_store/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: HomeScreen(),
         theme: ThemeData(
           scaffoldBackgroundColor: Color(0xFFFAFAFA),
           fontFamily: 'Montserrat',

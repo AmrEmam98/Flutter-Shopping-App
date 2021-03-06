@@ -1,18 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shopping_store/models/category.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
 import 'package:online_shopping_store/screens/category_screen.dart';
 
 class CategoryListItem extends StatelessWidget {
-  final Category category;
-  CategoryListItem(this.category);
+  final CategoryType catType;
+  IconData catIcon;
+  CategoryListItem({this.catType,this.catIcon});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: InkWell(
         onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CategoryScreen(category)));;
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CategoryScreen(catType)));;
         },
         child: Column(
           children: <Widget>[
@@ -29,7 +31,7 @@ class CategoryListItem extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(12.0),
                   child: Icon(
-              category.catIcon,
+              catIcon,
               color: Colors.black,
               size: 32.0,
             ),
@@ -38,7 +40,7 @@ class CategoryListItem extends StatelessWidget {
               padding: EdgeInsets.only(top: 12.0),
             ),
             Text(
-              category.catName,
+              catType.toString().split('.')[1],
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16.0,

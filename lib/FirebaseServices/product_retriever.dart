@@ -13,3 +13,4 @@ class ProductsRetriever {
     return firebaseFirestoreInstance.collection(CART_COLLECTION_PATH).doc(userId).get();
   }
 }
+

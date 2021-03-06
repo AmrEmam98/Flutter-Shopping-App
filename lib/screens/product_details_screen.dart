@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shopping_store/ViewModels/product_details_view_model.dart';
 import 'package:online_shopping_store/models/ProductModels/product.dart';
-import 'package:online_shopping_store/screens/cart_screen.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
+import 'package:online_shopping_store/widgets/selectable_list_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final Product product;
+  final NewProductModel product;
 
   ProductDetailsScreen({this.product});
 
@@ -14,7 +15,7 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  Product product;
+  NewProductModel product;
   ProductDetailsViewModel _productDetailsViewModel;
 
   @override
@@ -31,7 +32,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          widget.product.mainInfo.title,
+          widget.product.title,
           style: Theme.of(context)
               .textTheme
               .headline4
@@ -54,15 +55,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         CachedNetworkImage(
-                            imageUrl: product
-                                .mainInfo.displayedImageColor.imgColorUrl,
+                            imageUrl: product.imgUrl,
                             fit: BoxFit.fill,
                             height: screenSize.height * 0.35),
                         SizedBox(
                           height: 16.0,
                         ),
                         Text(
-                          product.mainInfo.title,
+                          product.title,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       ],
@@ -83,7 +83,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           textAlign: TextAlign.start,
                         ),
                         Text(
-                          product.mainInfo.description,
+                          product.description,
                           style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.black,
@@ -92,7 +92,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         SizedBox(
                           height: 16.0,
                         ),
-                        product.buildProductSpecs(context),
+                        SelectableListWidget(
+                          title: 'Color:',
+                          selectableList: [product.colorLabel],
+                        ),
+
+                       ...buildProductSpecsUi(product.productSpecs),
                         SizedBox(
                           height: 16.0,
                         ),
@@ -100,7 +105,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              '${product.mainInfo.price} EGP',
+                              '${product.price} EGP',
                               style: TextStyle(
                                   fontSize: 18.0,
                                   color: Colors.red,
@@ -136,11 +141,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   void toggleCart() {
     setState(() {
-      product.mainInfo.inCart = !product.mainInfo.inCart;
+      product.inCart = !product.inCart;
     });
   }
 
-  bool inCart() => product.mainInfo.inCart;
+  bool inCart() => product.inCart;
+
+ List<Widget> buildProductSpecsUi(Map<String, dynamic> productSpecs) {
+    return productSpecs.keys.map((attribute) => SelectableListWidget(
+      title: attribute+' :',
+      selectableList: [productSpecs[attribute].toString()],
+    )).toList();
+  }
 }
 
 class AddToCartButton extends StatelessWidget {

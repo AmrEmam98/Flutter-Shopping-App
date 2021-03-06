@@ -6,23 +6,40 @@ import 'package:online_shopping_store/models/color_map.dart';
 import 'models/ProductModels/mobile_product.dart';
 import 'models/category.dart';
 import 'models/ProductModels/product.dart';
+import 'models/new_product_model.dart';
 import 'models/color_map.dart';
 import 'models/ProductModels/product_main_info.dart';
 
 class DummyData {
   static fillCategoryDummyData() {
-    List<Category> categories = List();
-    categories.add(Category(catName: ALL_CAT, catIcon: Icons.menu));
-    categories
-        .add(Category(catName: CLOTHES_CAT, catIcon: FontAwesomeIcons.tshirt));
-    categories.add(Category(catName: MOBILE_CAT, catIcon: Icons.phone_android));
-    categories.add(Category(catName: 'Home', catIcon: FontAwesomeIcons.chair));
-    categories
-        .add(Category(catName: 'Baby', catIcon: FontAwesomeIcons.babyCarriage));
-    categories.add(
-        Category(catName: 'Fashion', catIcon: FontAwesomeIcons.shoppingBag));
+//    List<Category> categories = List();
+//    categories.add(Category(catName: ALL_CAT, catIcon: Icons.menu));
+//    categories
+//        .add(Category(catName: CLOTHES_CAT, catIcon: FontAwesomeIcons.tshirt));
+//    categories.add(Category(catName: MOBILE_CAT, catIcon: Icons.phone_android));
+//    categories.add(Category(catName: 'Home', catIcon: FontAwesomeIcons.chair));
+//    categories
+//        .add(Category(catName: 'Baby', catIcon: FontAwesomeIcons.babyCarriage));
+//    categories.add(
+//        Category(catName: 'Fashion', catIcon: FontAwesomeIcons.shoppingBag));
+    Map<CategoryType,IconData>categories={
+      CategoryType.All: Icons.menu,
+      CategoryType.Mobile: Icons.phone_android,
+      CategoryType.Clothes: FontAwesomeIcons.tshirt,
+      CategoryType.Furniture: FontAwesomeIcons.chair,
+      CategoryType.Fashion: FontAwesomeIcons.shoppingBag,
+      CategoryType.Baby: FontAwesomeIcons.babyCarriage,
+    };
     return categories;
   }
+  Map<CategoryType,IconData>categories={
+  CategoryType.All: Icons.menu,
+  CategoryType.Mobile: Icons.phone_android,
+  CategoryType.Clothes: FontAwesomeIcons.tshirt,
+  CategoryType.Furniture: FontAwesomeIcons.chair,
+  CategoryType.Fashion: FontAwesomeIcons.shoppingBag,
+  CategoryType.Baby: FontAwesomeIcons.babyCarriage,
+  };
 
   static List<String> getCarouselImageList() {
     List<String> imgList = [

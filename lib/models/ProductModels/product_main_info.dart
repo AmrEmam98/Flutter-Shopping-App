@@ -15,6 +15,7 @@ class ProductMainInfo {
     @required this.description,
     @required this.model,
     @required this.price,
+
     @required this.categoryType,
     @required this.displayedImageColor,
     @required this.quantityInStock,

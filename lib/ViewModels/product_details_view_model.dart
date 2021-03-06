@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:online_shopping_store/models/ProductModels/product.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
 import 'package:online_shopping_store/models/cart_model.dart';
 import 'package:online_shopping_store/provider/cart_favorite_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ class ProductDetailsViewModel {
 
   ProductDetailsViewModel({this.context});
 
-  void addProductToCart(Product product) {
+  void addProductToCart(NewProductModel product) {
 
     CartModel cartModel =
         CartModel( product: product);
@@ -19,7 +20,7 @@ class ProductDetailsViewModel {
         .addProductToCart(cartModel);
   }
 
-  void removeProductFromCart(Product product) {
+  void removeProductFromCart(NewProductModel product) {
     Provider.of<CartFavoriteProvider>(context, listen: false)
         .removeProductFromCart(product);
   }

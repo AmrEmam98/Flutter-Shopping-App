@@ -1,12 +1,13 @@
 
 import 'ProductModels/product.dart';
+import 'new_product_model.dart';
 
 class CartModel {
   String productId;
-  Product product;
+  NewProductModel product;
   int orderedQuantity;
   CartModel({this.productId,this.product,this.orderedQuantity=1}){
-    productId=product.mainInfo.id;
+    productId=product.id;
   }
 
   CartModel.fromJson(dynamic snapShot)
@@ -18,5 +19,5 @@ class CartModel {
     'orderedQuantity':orderedQuantity
       };
 
-  double getTotalPrice()=>orderedQuantity*product.mainInfo.price;
+  double getTotalPrice()=>orderedQuantity*product.price;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:online_shopping_store/FirebaseServices/products_setter.dart';
 import 'package:online_shopping_store/models/ProductModels/product.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
 import 'package:online_shopping_store/models/cart_model.dart';
 
 
@@ -10,22 +11,22 @@ class CartFavoriteProvider extends ChangeNotifier {
   void addProductToCart(CartModel cartModel) {
     cartProducts.add(cartModel);
     notifyListeners();
-    _saveToFirebase();
+   // _saveToFirebase();
   }
 
-  void removeProductFromCart(Product product) {
+  void removeProductFromCart(NewProductModel product) {
     for (int i = 0; i < cartProducts.length; i++) {
-      if (product.mainInfo.id == cartProducts[i].productId) {
+      if (product.id == cartProducts[i].productId) {
         cartProducts.removeAt(i);
         notifyListeners();
-        _saveToFirebase();
+    //    _saveToFirebase();
         break;
       }
     }
     notifyListeners();
   }
   void removeCartItemByIndex(int index){
-    Product product=cartProducts[index].product;
+    NewProductModel product=cartProducts[index].product;
     cartProducts.removeAt(index);
     notifyListeners();
   }

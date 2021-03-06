@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:online_shopping_store/FirebaseServices/product_retriever.dart';
 import 'package:online_shopping_store/constants.dart';
 import 'package:online_shopping_store/models/ProductModels/product.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
 import 'package:online_shopping_store/models/ProductModels/product_factory.dart';
 import 'package:online_shopping_store/models/cart_model.dart';
 import 'package:online_shopping_store/provider/cart_favorite_provider.dart';
@@ -51,17 +52,17 @@ class LoadingViewModel {
     snapShot.docs.forEach((doc) {
       Product product = ProductFactory(snapShot: doc.data()).getProduct();
       product.mainInfo.id = doc.id;
-      _checkIfProductInCart(product);
+      //_checkIfProductInCart(product);
       products.add(product);
     });
-    Provider.of<ProductProvider>(context,listen: false).setAllProducts(products);
+   // Provider.of<ProductProvider>(context,listen: false).setAllProducts(products);
   }
 
-  void _checkIfProductInCart(Product product) {
+  void _checkIfProductInCart(NewProductModel product) {
     for (int i = 0; i < cartModels.length; i++) {
-      if (cartModels[i].productId == product.mainInfo.id) {
+      if (cartModels[i].productId == product.id) {
         cartModels[i].product = product;
-        product.mainInfo.inCart = true;
+        product.inCart = true;
         break;
       }
     }

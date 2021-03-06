@@ -7,9 +7,10 @@ import 'package:online_shopping_store/provider/product_provider.dart';
 import 'package:online_shopping_store/screens/product_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:rating_bar/rating_bar.dart';
+import 'package:online_shopping_store/models/new_product_model.dart';
 
 class ProductItem extends StatelessWidget {
-  Product product;
+  NewProductModel product;
   final int maxStringLength = 13;
   int index;
 
@@ -36,7 +37,7 @@ class ProductItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               CachedNetworkImage(
-                imageUrl: product.mainInfo.displayedImageColor.imgColorUrl,
+                imageUrl: product.imgUrl,
                 height: screenSize.height * 0.2,
                 width: screenSize.width * 0.25,
                 fit: BoxFit.contain,
@@ -45,7 +46,7 @@ class ProductItem extends StatelessWidget {
                 height: 10.0,
               ),
               Text(
-                resizeString(product.mainInfo.model),
+                resizeString(product.model),
                 style: TextStyle(
                     color: Colors.black38,
                     fontSize: 18.0,
@@ -53,7 +54,7 @@ class ProductItem extends StatelessWidget {
               ),
               SizedBox(
                 child: Text(
-                  resizeString(product.mainInfo.title),
+                  resizeString(product.title),
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
@@ -61,7 +62,7 @@ class ProductItem extends StatelessWidget {
                 ),
               ),
               Text(
-                '${product.mainInfo.price} EGP',
+                '${product.price} EGP',
                 style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w500,
@@ -73,7 +74,7 @@ class ProductItem extends StatelessWidget {
               RatingBar.readOnly(
                 filledIcon: Icons.star,
                 emptyIcon: Icons.star_border,
-                initialRating: product.mainInfo.rate,
+                initialRating: product.rate,
                 filledColor: Colors.amber,
                 size: 22.0,
               ),
@@ -87,7 +88,7 @@ class ProductItem extends StatelessWidget {
 
   String resizeString(String title) {
     if (title.length > maxStringLength)
-      return product.mainInfo.title.substring(0, maxStringLength) + '..';
+      return product.title.substring(0, maxStringLength) + '..';
     return title;
   }
 }
@@ -97,7 +98,7 @@ class FavouriteCartRow extends StatelessWidget {
 
   FavouriteCartRow({this.index});
 
-  Product product;
+  NewProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -110,14 +111,14 @@ class FavouriteCartRow extends StatelessWidget {
           children: <Widget>[
             IconButton(
               icon: Icon(
-                  product.mainInfo.isFavourite
+                  product.isFavourite
                       ? Icons.favorite
                       : Icons.favorite_border,
-                  color: product.mainInfo.isFavourite
+                  color: product.isFavourite
                       ? Theme.of(context).primaryColor
                       : Colors.black),
               onPressed: () {
-                product.mainInfo.isFavourite = product.mainInfo.isFavourite;
+                product.isFavourite = product.isFavourite;
               },
             ),
             IconButton(
@@ -150,5 +151,5 @@ class FavouriteCartRow extends StatelessWidget {
     cartFavoriteProvider.removeProductFromCart(product);
   }
 
-  bool inCart() => product.mainInfo.inCart;
+  bool inCart() => product.inCart;
 }
